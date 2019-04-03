@@ -33,14 +33,16 @@ namespace ConfigurationPipelineExample
 
         private static ServiceProvider ConfigureServices(IServiceCollection services)
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true);
+
             services.AddSingleton(new LoggerFactory());
 
             services.AddLogging(config => config.AddConsole())
                 .Configure<LoggerFilterOptions>(config => config.MinLevel = LogLevel.Information);
 
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true);
+            
 
             Configuration = builder.Build();
 
