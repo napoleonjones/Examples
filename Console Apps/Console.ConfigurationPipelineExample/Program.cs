@@ -22,17 +22,16 @@ namespace ConfigurationPipelineExample
 
         static void Main(string[] args)
         {
-            var services = new ServiceCollection();
-
-            ServiceProvider = ConfigureServices(services);
+            ServiceProvider = ConfigureServices();
 
             var transactionService = ServiceProvider.GetService<ITransactionService>();
 
             Console.WriteLine($"Transaction Count:  {transactionService.GetCount()} \tTransaction Total:  ${transactionService.GetTotal()}");
         }
 
-        private static ServiceProvider ConfigureServices(IServiceCollection services)
+        private static ServiceProvider ConfigureServices()
         {
+            var services = new ServiceCollection();
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", true, true);
